@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { ChangeEvent, useContext, useState } from "react";
 import { AppContext } from "../AppContext";
 import { MdModeEditOutline, MdCancel } from "react-icons/md";
@@ -7,10 +8,11 @@ import { FaSave } from "react-icons/fa";
 import { INewFlashcard, blankNewFlashcard } from "../shared/interfaces";
 
 export const PageManageFlashcards = () => {
-	const { flashcards } = useContext(AppContext);
+	const { flashcards, saveAddFlashcard } = useContext(AppContext);
 	const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
-	const [newFlashcard, setNewFlashcard] =
-		useState<INewFlashcard>(structuredClone(blankNewFlashcard));
+	const [newFlashcard, setNewFlashcard] = useState<INewFlashcard>(
+		structuredClone(blankNewFlashcard)
+	);
 
 	const handleChangeNewFlashcardField = (
 		e: ChangeEvent<HTMLInputElement>,
@@ -35,7 +37,23 @@ export const PageManageFlashcards = () => {
 	const handleCancelAddFlashcard = () => {
 		setIsAddingFlashcard(false);
 		setNewFlashcard(structuredClone(blankNewFlashcard));
-	}
+	};
+
+	const handleSaveAddFlashcard = () => {
+		(async () => {
+			try {
+				const response = await saveAddFlashcard(newFlashcard);
+				if (response.message === "ok") {
+					handleCancelAddFlashcard();
+				}
+			} catch (e: any) {
+				console.log(`${e.message}`);
+				alert(
+					"We're sorry, your flashcard cannot be saved at this time. Try again later, or contact 2342-234-23343."
+				);
+			}
+		})();
+	};
 
 	return (
 		<>
@@ -96,8 +114,14 @@ export const PageManageFlashcards = () => {
 								</td>
 								<td>
 									<div className="flex gap-1">
-										<FaSave className="cursor-pointer hover:text-green-900" />
-										<MdCancel onClick={handleCancelAddFlashcard} className="cursor-pointer hover:text-red-900" />
+										<FaSave
+											onClick={handleSaveAddFlashcard}
+											className="cursor-pointer hover:text-green-900"
+										/>
+										<MdCancel
+											onClick={handleCancelAddFlashcard}
+											className="cursor-pointer hover:text-red-900"
+										/>
 									</div>
 								</td>
 							</tr>
