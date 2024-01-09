@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { AppContext } from "../AppContext";
 import { MdModeEditOutline, MdCancel } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
@@ -10,7 +10,33 @@ export const PageManageFlashcards = () => {
 	const { flashcards } = useContext(AppContext);
 	const [isAddingFlashcard, setIsAddingFlashcard] = useState(false);
 	const [newFlashcard, setNewFlashcard] =
-		useState<INewFlashcard>(blankNewFlashcard);
+		useState<INewFlashcard>(structuredClone(blankNewFlashcard));
+
+	const handleChangeNewFlashcardField = (
+		e: ChangeEvent<HTMLInputElement>,
+		field: string
+	) => {
+		const value = e.target.value;
+		switch (field) {
+			case "category":
+				newFlashcard.category = value;
+				break;
+			case "front":
+				newFlashcard.front = value;
+				break;
+			case "back":
+				newFlashcard.back = value;
+				break;
+		}
+		const _newFlashcard = structuredClone(newFlashcard);
+		setNewFlashcard(_newFlashcard);
+	};
+
+	const handleCancelAddFlashcard = () => {
+		setIsAddingFlashcard(false);
+		setNewFlashcard(structuredClone(blankNewFlashcard));
+	}
+
 	return (
 		<>
 			<p>There are {flashcards.length} flashcards:</p>
@@ -42,18 +68,36 @@ export const PageManageFlashcards = () => {
 							<tr>
 								<td></td>
 								<td>
-									<input className="w-full" />
+									<input value={bl} className="w-full" />
 								</td>
 								<td>
-									<input className="w-full" />
+									<input
+										value={newFlashcard.front}
+										onChange={(e) =>
+											handleChangeNewFlashcardField(
+												e,
+												"front"
+											)
+										}
+										className="w-full"
+									/>
 								</td>
 								<td>
-									<input className="w-full" />
+									<input
+										value={newFlashcard.back}
+										onChange={(e) =>
+											handleChangeNewFlashcardField(
+												e,
+												"back"
+											)
+										}
+										className="w-full"
+									/>
 								</td>
 								<td>
 									<div className="flex gap-1">
 										<FaSave className="cursor-pointer hover:text-green-900" />
-										<MdCancel className="cursor-pointer hover:text-red-900" />
+										<MdCancel onClick={handleCancelAddFlashcard} className="cursor-pointer hover:text-red-900" />
 									</div>
 								</td>
 							</tr>
