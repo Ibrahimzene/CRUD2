@@ -14,9 +14,9 @@
     },
     {
       "suuid": "891As1",
-      "category": "git",
+      "category": "kaksakskdjfdskjf",
       "front": "show commit history with hash, title, author",
-      "back": "git log --pretty=format:\"%h - %s - %an\" "
+      "back": "back back"
     },
     {
       "suuid": "3bCd45",
@@ -26,7 +26,7 @@
     },
     {
       "suuid": "7iJk89",
-      "category": "linux",
+      "category": "nnnnnnn",
       "front": "create a new file",
       "back": "touch index.html"
     }
