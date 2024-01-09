@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as flashcardHandlers from '../handlers/flashcardHandlers';
-import { IFlashcard, INewFlashcard, IPatchFlashcard } from '../../interfaces';
+import { IFlashcard, INewFlashcard, IPatchFlashcard } from '../../../src/shared/interfaces';
 
 export const flashcardRouter = Router();
 
@@ -54,4 +54,4 @@ flashcardRouter.delete('/:suuid', async (req, res) => {
 	} else {
 		res.status(404).json(`Flashcard with suuid "${suuid}" not found.`)
 	}
-})
+});
