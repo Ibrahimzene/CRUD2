@@ -5,7 +5,10 @@ import { MdModeEditOutline, MdCancel } from "react-icons/md";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { SiOneplus } from "react-icons/si";
 import { FaSave } from "react-icons/fa";
-import { INewFlashcard, blankNewFlashcard } from "../shared/interfaces";
+import {
+	INewFlashcard,
+	blankNewFlashcard,
+} from "../shared/interfaces";
 
 export const PageManageFlashcards = () => {
 	const { flashcards, saveAddFlashcard } = useContext(AppContext);
@@ -48,9 +51,7 @@ export const PageManageFlashcards = () => {
 				}
 			} catch (e: any) {
 				console.log(`${e.message}`);
-				alert(
-					"We're sorry, your flashcard cannot be saved at this time. Try again later, or contact 2342-234-23343."
-				);
+				alert("We're sorry, your flashcard cannot be saved at this time. Try again later, or contact 2342-234-23343.")
 			}
 		})();
 	};
@@ -86,7 +87,7 @@ export const PageManageFlashcards = () => {
 							<tr>
 								<td></td>
 								<td>
-									<input value={bl} className="w-full" />
+									<input value={newFlashcard.category} className="w-full" />
 								</td>
 								<td>
 									<input
